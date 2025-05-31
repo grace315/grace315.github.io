@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>🐾 我的貓咪日常</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #fffafc; }
+    h1 { color: #ff66aa; }
+    #gallery { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 20px; }
+    .card { border: 1px solid #ddd; padding: 10px; border-radius: 12px; background: #fff; width: 200px; }
+    .card img { width: 100%; border-radius: 8px; }
+    .card p { margin: 8px 0 0; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>🐱 我的貓咪日常分享</h1>
+  <input type="file" id="fileInput">
+  <input type="text" id="descInput" placeholder="今天貓貓在幹嘛？">
+  <button onclick="addCat()">新增</button>
+
+  <div id="gallery"></div>
+
+  <script>
+    function addCat() {
+      const fileInput = document.getElementById('fileInput');
+      const descInput = document.getElementById('descInput');
+      const gallery = document.getElementById('gallery');
+
+      const file = fileInput.files[0];
+      const desc = descInput.value;
+
+      if (!file) return alert('請選擇一張圖片');
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const img = document.createElement('img');
+        img.src = e.target.result;
+
+        const p = document.createElement('p');
+        p.textContent = desc;
+
+        card.appendChild(img);
+        card.appendChild(p);
+        gallery.appendChild(card);
+      };
+      reader.readAsDataURL(file);
+
+      fileInput.value = '';
+      descInput.value = '';
+    }
+  </script>
+</body>
+</html>
